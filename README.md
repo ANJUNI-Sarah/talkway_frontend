@@ -1,30 +1,98 @@
-# React + TypeScript + Vite
+# Talkway
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Online English conversation and speaking practice.
 
-Currently, two official plugins are available:
+## Getting Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Upgrade node.js to 21.6.2
+-   Run `npm install yarn --g`
+-   Run `yarn` for install.
+-   Run `npx husky prepare`
 
-## Expanding the ESLint configuration
+## Commands
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+##### Run the development server
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+yarn dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+##### Build for production
+
+```
+yarn build
+```
+
+##### Run ESlint linting
+
+```
+yarn lint
+```
+
+##### Run ESlint linting and fix
+
+```
+yarn lint:fix
+```
+
+##### Run ESlint linting and type check
+
+```
+yarn validate
+```
+
+## Naming Rule
+
+### Branch Naming Rule
+
+-   {feat/fix/improve}/{description}
+
+```
+[
+  feat,     // 功能
+  fix,      // bugs 修復
+  improve,  // Refactor / Docs / Test
+]
+```
+
+### Git Commit Rule
+
+Please follow [config-conventional](https://github.com/conventional-changelog/commitlint)
+
+```
+<type>[optional scope]: <description> #<task id>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+#### Example:
+
+```
+feat(auth): add user login functionality #12345
+
+- Users can now log in using their email and password.
+- Added validation for input fields.
+
+BREAKING CHANGE: The API endpoint for fetching user data has been changed from `/api/user_data` to `/api/data/user`. Please update your calls accordingly.
+```
+
+#### Type Enum
+
+```
+[
+  build,    // 建構專案工具(vite/lint... )
+  feat,     // 新增功能
+  fix,      // bugs 修復
+  docs,     // 文件類修改(README.md/storybook...)
+  style,    // 樣式/theme
+  refactor, // 重構
+  perf,     // 處理效能相關
+  revert,   // 撤銷commit
+  test,     // 測試
+  ci,       // ci相關配置
+]
+```
+
+## File Structure(待捕)
