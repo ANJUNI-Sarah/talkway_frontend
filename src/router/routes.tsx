@@ -1,26 +1,28 @@
-import { Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
+import { RouteObject, createBrowserRouter } from "react-router-dom";
+import { BaseLayout } from "@/components/layout/baseLayout";
+import { HomePage } from "@/pages/home";
 
 const RouterNoMatch = () => {
-    return <div>404</div>;
+    return <div>RouterNoMatch</div>;
 };
 
 export const routes: RouteObject[] = [
     {
         path: "/",
-        element: <Outlet />,
+        element: <BaseLayout />,
         children: [
             {
                 path: "/",
-                element: <div>Home</div>,
+                element: <HomePage />,
             },
-            {
-                path: "/settings",
-                element: <div>settings</div>,
-            },
-            {
-                path: "/about",
-                element: <div>about</div>,
-            },
+            // {
+            //     path: "/settings",
+            //     element: <div>settings</div>,
+            // },
+            // {
+            //     path: "/about",
+            //     element: <div>about</div>,
+            // },
         ],
     },
     {

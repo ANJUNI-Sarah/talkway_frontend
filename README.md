@@ -2,6 +2,9 @@
 
 Online English conversation and speaking practice.
 
+## Technologies
+Vite, React, Yarn, Zustand, Tailwind, Chakra ui, Eslint, Husky...
+
 ## Getting Start
 
 -   Upgrade node.js to 21.6.2
@@ -96,3 +99,4 @@ BREAKING CHANGE: The API endpoint for fetching user data has been changed from `
 ```
 
 ## File Structure(待捕)
+
