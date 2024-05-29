@@ -1,7 +1,9 @@
+// import { Container } from "@chakra-ui/react";
+
 export const Footer = () => {
     return (
-        <footer>
+        <div className="w-full">
             <p>Footer</p>
-        </footer>
+        </div>
     );
 };

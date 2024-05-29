@@ -1,10 +1,12 @@
+import { lazy } from "react";
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import { BaseLayout } from "@/components/layout/baseLayout";
-import { HomePage } from "@/pages/home";
 
 const RouterNoMatch = () => {
     return <div>RouterNoMatch</div>;
 };
+
+const HomePage = lazy(() => import("../pages/index"));
 
 export const routes: RouteObject[] = [
     {
@@ -31,6 +33,6 @@ export const routes: RouteObject[] = [
     },
 ];
 
-const router = createBrowserRouter(routes, { basename: "/talkway" });
+const router = createBrowserRouter(routes, { basename: "/" });
 
 export default router;
