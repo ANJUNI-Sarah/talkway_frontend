@@ -1,5 +1,5 @@
 import { map } from "lodash";
-import { Button, Center, Text, Select, Stack, Container } from "@chakra-ui/react";
+import { Button, Center, Text, Select, Stack, Container, Link } from "@chakra-ui/react";
 
 type talkTypeObject = {
     key: string;
@@ -34,7 +34,9 @@ const HomePage = () => {
                             {map(talkType, Option)}
                         </Select>
                     </Center>
-                    <Button colorScheme="brand">開始對話</Button>
+                    <Button colorScheme="brand">
+                        <Link href="/talk/settings">開始對話</Link>
+                    </Button>
                     <Button colorScheme="brand" isDisabled={true}>
                         回饋建議
                     </Button>

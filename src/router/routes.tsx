@@ -1,12 +1,14 @@
 import { lazy } from "react";
-import { RouteObject, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
 import { BaseLayout } from "@/components/layout/baseLayout";
+
+import { talkRoutes } from "./talkRouter";
+
+const HomePage = lazy(async () => import("@/pages"));
 
 const RouterNoMatch = () => {
     return <div>RouterNoMatch</div>;
 };
-
-const HomePage = lazy(() => import("../pages/index"));
 
 export const routes: RouteObject[] = [
     {
@@ -14,17 +16,16 @@ export const routes: RouteObject[] = [
         element: <BaseLayout />,
         children: [
             {
-                path: "/",
+                index: true,
                 element: <HomePage />,
             },
-            // {
-            //     path: "/settings",
-            //     element: <div>settings</div>,
-            // },
-            // {
-            //     path: "/about",
-            //     element: <div>about</div>,
-            // },
+            {
+                path: "/talk",
+                element: <Outlet />,
+                children: [...talkRoutes],
+            },
+
+            /* Add other features new routes here */
         ],
     },
     {
@@ -33,6 +34,6 @@ export const routes: RouteObject[] = [
     },
 ];
 
-const router = createBrowserRouter(routes, { basename: "/" });
+const router = createBrowserRouter(routes);
 
 export default router;
