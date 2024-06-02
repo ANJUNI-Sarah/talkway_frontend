@@ -3,6 +3,7 @@
 Online English conversation and speaking practice.
 
 ## Technologies
+
 Vite, React, Yarn, Zustand, Tailwind, Chakra ui, Eslint, Husky...
 
 ## Getting Start
@@ -98,5 +99,28 @@ BREAKING CHANGE: The API endpoint for fetching user data has been changed from `
 ]
 ```
 
-## File Structure(待捕)
+## File Structure
 
+```
+src/
+├── components/
+│   ├── Header.tsx
+│   └── Footer.tsx
+├── assets/
+│
+├── page/
+│   ├── HomePage.tsx
+│   └── SettingsPage.tsx
+├── router/
+│   └──routes.tsx
+│ 
+├── hooks/
+│   └── useCustomHook.tsx
+├── utils/
+│   └── helpers.tsx
+├── mock/
+│   └── apiMethods.tsx
+├── App.tsx
+├── main.tsx
+└── serviceWorker.tsx
+```
