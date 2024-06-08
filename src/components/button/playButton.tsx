@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/react";
 import { forwardRef, HTMLAttributes, useMemo, useState } from "react";
 
 type PlayButtonProps = {
@@ -26,9 +27,9 @@ export const PlayButton = forwardRef<HTMLButtonElement, PlayButtonProps>(
 
         // TODO: play/stop icon
         return (
-            <button ref={ref} {...props} onClick={handleClick}>
+            <Button ref={ref} {...props} onClick={handleClick}>
                 {isPlay ? "Stop" : "Play"}
-            </button>
+            </Button>
         );
     },
 );

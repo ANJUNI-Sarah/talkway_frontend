@@ -16,7 +16,11 @@ const talkType: talkTypeObject[] = [
     { key: "tool", value: "工具" },
 ];
 
-const Option = (option: talkTypeObject) => <option {...option}>{option.value}</option>;
+const Option = (option: talkTypeObject) => (
+    <option key={option.key} value={option.value}>
+        {option.value}
+    </option>
+);
 
 const HomePage = () => {
     return (
