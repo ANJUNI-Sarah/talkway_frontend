@@ -7,7 +7,12 @@ export enum BarState {
 
 export type BarStateType = BarState.Active | BarState.Rest;
 
-export const useCountDownBar = (isAutoStart?: boolean) => {
+type UseCountDownBar = {
+    time: number;
+    isAutoStart?: boolean;
+};
+
+export const useCountDownBar = ({ time, isAutoStart = true }: UseCountDownBar) => {
     /* State */
     const [state, setState] = useState<BarStateType>(isAutoStart ? BarState.Active : BarState.Rest);
     const [resetKey, setResetKey] = useState(0);
@@ -20,5 +25,5 @@ export const useCountDownBar = (isAutoStart?: boolean) => {
         setState(BarState.Active);
     };
 
-    return { resetKey, handleReset, state, setState };
+    return { time, resetKey, handleReset, state, setState };
 };

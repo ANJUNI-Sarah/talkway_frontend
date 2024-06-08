@@ -1,5 +1,5 @@
 import { map } from "lodash";
-import { Button, Center, Text, Select, Stack, Container, Link } from "@chakra-ui/react";
+import { Stack, Button, Center, Text, Select, VStack, Container, Link } from "@chakra-ui/react";
 
 type talkTypeObject = {
     key: string;
@@ -24,29 +24,31 @@ const Option = (option: talkTypeObject) => (
 
 const HomePage = () => {
     return (
-        <Container>
-            <Center>
-                <Stack spacing={4} w="100%">
-                    <Center>
-                        <Text fontWeight="550" fontSize="32px">
-                            歡迎回來！
-                        </Text>
-                    </Center>
-                    <Center>
-                        <Text>主題：</Text>
-                        <Select flex="1" boxShadow="lg" border="1px">
-                            {map(talkType, Option)}
-                        </Select>
-                    </Center>
-                    <Button colorScheme="brand">
-                        <Link href="/talk/settings">開始對話</Link>
-                    </Button>
+        <VStack height="100vh" align="center" justify="center">
+            <Container>
+                <Center paddingBottom="50px">
+                    <Text fontWeight="550" fontSize="36px">
+                        歡迎回來！
+                    </Text>
+                </Center>
+                <Center paddingBottom="30px">
+                    <Text>主題：</Text>
+                    <Select flex="1" boxShadow="lg" border="1px">
+                        {map(talkType, Option)}
+                    </Select>
+                </Center>
+                <Stack>
+                    <Link href="/talk/settings">
+                        <Button colorScheme="brand" w="100%">
+                            開始對話
+                        </Button>
+                    </Link>
                     <Button colorScheme="brand" isDisabled={true}>
                         回饋建議
                     </Button>
                 </Stack>
-            </Center>
-        </Container>
+            </Container>
+        </VStack>
     );
 };
 

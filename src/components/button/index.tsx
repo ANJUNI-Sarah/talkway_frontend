@@ -1,3 +1,3 @@
-import { PlayButton } from "./playButton";
+import { ToggleButton } from "./ToggleButton";
 
-export { PlayButton };
+export { ToggleButton };
