@@ -9,8 +9,7 @@ export const BubbleBox = React.forwardRef<HTMLDivElement, BubbleBoxProps>(
         return (
             <Box
                 ref={ref}
-                w="200px"
-                h="100px"
+                w="250px"
                 position="relative"
                 border="1px solid gray"
                 borderRadius="lg"

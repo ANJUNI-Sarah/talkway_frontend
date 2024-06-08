@@ -1,11 +1,12 @@
 // import React, { useState } from "react";
-import { Container, Box, Button, Center } from "@chakra-ui/react";
+import { Container, Box, Button, Center, Flex } from "@chakra-ui/react";
 
 import { ChatBoxLayout } from "@/components/layout";
 import { CountdownBar } from "@/components/countdownBar";
-import { ToggleButton } from "@/components/button/ToggleButton";
 import { BubbleBox } from "@/components/box";
 import { useCountDownBar } from "@/hooks/useCountDownBar";
+
+import { AudioPlaySlider } from "@/components/slider/audioPlaySlider";
 
 const ChatPage = () => {
     const { handleReset, ...countDownFlow } = useCountDownBar({ time: 10 });
@@ -15,10 +16,20 @@ const ChatPage = () => {
             <CountdownBar {...countDownFlow} />
             <ChatBoxLayout>
                 <BubbleBox>
-                    <ToggleButton />
+                    <AudioPlaySlider
+                        src={"https://www.bensound.com/bensound-music/bensound-memories.mp3"}
+                    />
+                    <Flex direction={"row-reverse"}>
+                        <Button>文章</Button>
+                    </Flex>
                 </BubbleBox>
                 <BubbleBox>
-                    <ToggleButton />
+                    <AudioPlaySlider
+                        src={"https://www.bensound.com/bensound-music/bensound-memories.mp3"}
+                    />
+                    <Flex direction={"row-reverse"}>
+                        <Button>文章</Button>
+                    </Flex>
                 </BubbleBox>
             </ChatBoxLayout>
             <Center>

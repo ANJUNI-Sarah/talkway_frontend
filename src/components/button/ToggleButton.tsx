@@ -5,19 +5,19 @@ type ToggleButtonProps = {
     iconOnActive?: string;
     iconOnStop?: string;
     isAutoPlay?: boolean;
-    isOnControl?: boolean;
+    isOnControlPlay?: boolean;
     onActive?: () => void;
     onStop?: () => void;
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
-    ({ isOnControl, isAutoPlay, onActive, onStop, ...props }, ref) => {
+    ({ isOnControlPlay, isAutoPlay, onActive, onStop, ...props }, ref) => {
         /* State */
-        const isControl = isOnControl && onStop && onActive;
-        const [innerIsPlay, setInnerIsPlay] = useState<boolean>(isAutoPlay || isOnControl || false);
+        const isControl = isOnControlPlay !== undefined && onStop && onActive;
+        const [innerIsPlay, setInnerIsPlay] = useState<boolean>(isAutoPlay || false);
         const isPlay = useMemo(
-            () => (isControl ? isOnControl : innerIsPlay),
-            [isControl, isOnControl, innerIsPlay],
+            () => (isControl ? isOnControlPlay : innerIsPlay),
+            [isControl, isOnControlPlay, innerIsPlay],
         );
 
         /* Event */
