@@ -1,34 +1,48 @@
-import { Button } from "@chakra-ui/react";
+import { Button, ButtonProps } from "@chakra-ui/react";
 import { forwardRef, HTMLAttributes, useMemo, useState } from "react";
 
 type ToggleButtonProps = {
     iconOnActive?: string;
     iconOnStop?: string;
-    isAutoPlay?: boolean;
-    isOnControlPlay?: boolean;
+    isAutoActive?: boolean;
+    isOnControlActive?: boolean;
     onActive?: () => void;
     onStop?: () => void;
-} & HTMLAttributes<HTMLButtonElement>;
+    childActive?: React.ReactNode;
+    childStop?: React.ReactNode;
+} & HTMLAttributes<HTMLButtonElement> &
+    ButtonProps;
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
-    ({ isOnControlPlay, isAutoPlay, onActive, onStop, ...props }, ref) => {
+    (
+        {
+            isOnControlActive,
+            isAutoActive,
+            onActive,
+            onStop,
+            childActive = "Play",
+            childStop = "Stop",
+            ...props
+        },
+        ref,
+    ) => {
         /* State */
-        const isControl = isOnControlPlay !== undefined && onStop && onActive;
-        const [innerIsPlay, setInnerIsPlay] = useState<boolean>(isAutoPlay || false);
+        const isControl = isOnControlActive !== undefined && onStop && onActive;
+        const [innerIsActive, setInnerIsActive] = useState<boolean>(isAutoActive || false);
         const isPlay = useMemo(
-            () => (isControl ? isOnControlPlay : innerIsPlay),
-            [isControl, isOnControlPlay, innerIsPlay],
+            () => (isControl ? isOnControlActive : innerIsActive),
+            [isControl, isOnControlActive, innerIsActive],
         );
+        console.log("isPlay", isPlay);
 
         /* Event */
-        const stop = () => (isControl ? onStop() : setInnerIsPlay(false));
-        const active = () => (isControl ? onActive() : setInnerIsPlay(true));
+        const stop = () => (isControl ? onStop() : setInnerIsActive(false));
+        const active = () => (isControl ? onActive() : setInnerIsActive(true));
         const handleClick = () => (isPlay ? stop() : active());
 
-        // TODO: play/stop icon
         return (
             <Button ref={ref} {...props} onClick={handleClick}>
-                {isPlay ? "Stop" : "Play"}
+                {isPlay ? childActive : childStop}
             </Button>
         );
     },

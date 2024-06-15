@@ -1,6 +1,7 @@
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 
 import "react-h5-audio-player/lib/styles.css";
+import "./audioPlaySlider.css";
 
 /** 参考:
  * https://lhz516.github.io/react-h5-audio-player/?path=/docs/layouts-advanced--stacked
@@ -15,7 +16,6 @@ export const AudioPlaySlider = ({ src }: AudioPlaySliderProps) => {
         <AudioPlayer
             src={src}
             autoPlayAfterSrcChange={false}
-            className="box-shadow-none"
             layout="horizontal-reverse"
             showJumpControls={false}
             customProgressBarSection={[RHAP_UI.PROGRESS_BAR]} // 讓佈局只剩下播放進度條

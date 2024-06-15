@@ -1,3 +1,3 @@
-import { AudioPlaySlider } from "./audioPlaySlider";
+import { AudioPlaySlider } from "./audioPlaySlider/audioPlaySlider";
 
 export default AudioPlaySlider;

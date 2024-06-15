@@ -1,23 +1,25 @@
 import React, { PropsWithChildren } from "react";
 
-import { Box } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 
-type BubbleBoxProps = React.ComponentProps<typeof Box> & PropsWithChildren;
+type BubbleBoxProps = React.ComponentProps<typeof VStack> & PropsWithChildren;
 
 export const BubbleBox = React.forwardRef<HTMLDivElement, BubbleBoxProps>(
     ({ children, ...rest }, ref) => {
         return (
-            <Box
+            <VStack
                 ref={ref}
                 w="250px"
                 position="relative"
                 border="1px solid gray"
                 borderRadius="lg"
                 padding="10px"
+                spacing={4}
+                align="stretch"
                 {...rest}
             >
                 {children}
-            </Box>
+            </VStack>
         );
     },
 );
