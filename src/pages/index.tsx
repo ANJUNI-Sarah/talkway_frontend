@@ -1,54 +1,75 @@
+import { useState, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { map } from "lodash";
-import { Stack, Button, Center, Text, Select, VStack, Container, Link } from "@chakra-ui/react";
+import { Stack, Button, Text, Select, VStack, Container, Center } from "@chakra-ui/react";
 
-type talkTypeObject = {
-    key: string;
+import { ChatType } from "@/utils/common/chat/types";
+import { TalkPageEnum } from "@/router/talkRouter/enum";
+
+type ChatTypeOptionsType = {
+    key: ChatType;
     value: string;
 };
 
-const talkType: talkTypeObject[] = [
-    { key: "job", value: "工作" },
-    { key: "company", value: "公司" },
-    { key: "location", value: "地點" },
-    { key: "category", value: "類別" },
-    { key: "level", value: "等級" },
-    { key: "language", value: "語言" },
-    { key: "tool", value: "工具" },
+const ChatTypeOptions: ChatTypeOptionsType[] = [
+    { key: ChatType.travel, value: "旅遊" },
+    { key: ChatType.workout, value: "運動" },
+    { key: ChatType.study, value: "學習" },
+    { key: ChatType.entertainment, value: "娛樂" },
+    { key: ChatType.news, value: "新聞" },
+    { key: ChatType.shopping, value: "購物" },
+    { key: ChatType.career, value: "事業" },
+    { key: ChatType.social, value: "社交" },
+    { key: ChatType.food, value: "美食" },
 ];
 
-const Option = (option: talkTypeObject) => (
-    <option key={option.key} value={option.value}>
+const Option = (option: ChatTypeOptionsType) => (
+    <option key={option.key} value={option.key}>
         {option.value}
     </option>
 );
 
 const HomePage = () => {
+    const navigate = useNavigate();
+    const [selectedChatType, setSelectedChatType] = useState<ChatType>(ChatType.travel);
+
+    /* Event */
+    const handleSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+        setSelectedChatType(event.target.value as ChatType);
+    };
+
+    const handleClick = () => {
+        navigate(TalkPageEnum.SETTINGS, { state: { chatType: selectedChatType } });
+    };
+
     return (
-        <VStack height="100vh" align="center" justify="center">
-            <Container>
-                <Center paddingBottom="50px">
-                    <Text fontWeight="550" fontSize="36px">
-                        歡迎回來！
-                    </Text>
-                </Center>
-                <Center paddingBottom="30px">
+        <Container>
+            <VStack height="100vh" align="center" justify="center" spacing={10}>
+                <Text fontWeight="550" fontSize="36px">
+                    歡迎回來！
+                </Text>
+                <Center w="100%">
                     <Text>主題：</Text>
-                    <Select flex="1" boxShadow="lg" border="1px">
-                        {map(talkType, Option)}
+                    <Select
+                        flex="1"
+                        boxShadow="lg"
+                        border="1px"
+                        onChange={handleSelect}
+                        defaultValue={selectedChatType}
+                    >
+                        {map(ChatTypeOptions, Option)}
                     </Select>
                 </Center>
-                <Stack>
-                    <Link href="/talk/settings">
-                        <Button colorScheme="brand" w="100%">
-                            開始對話
-                        </Button>
-                    </Link>
+                <Stack w="100%" spacing={5}>
+                    <Button colorScheme="brand" onClick={handleClick} size="lg" fontSize="lg">
+                        開始對話
+                    </Button>
                     <Button colorScheme="brand" isDisabled={true}>
                         回饋建議
                     </Button>
                 </Stack>
-            </Container>
-        </VStack>
+            </VStack>
+        </Container>
     );
 };
 

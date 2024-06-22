@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Container, Box, Button, Center, Flex, Skeleton } from "@chakra-ui/react";
 import { ReactMediaRecorder } from "react-media-recorder";
+import { last } from "lodash";
 
-import { TalkPageEnum } from "@/router/talkRouter";
 import { useMedia } from "@/hooks/useMedia";
 import { useCountdownBar } from "@/hooks/useCountdownBar";
+import { useStartGptChat, useContinuousGptChat } from "@/queries/useGptChat";
+
 import { ChatBoxLayout } from "@/components/layout";
 import { BubbleBox } from "@/components/box";
 import { ToggleButton } from "@/components/button";
@@ -13,17 +15,53 @@ import { AudioPlaySlider } from "@/components/slider/audioPlaySlider/audioPlaySl
 import { CountdownBar } from "@/components/countdownBar";
 
 const ChatPage = () => {
+    /* Hook */
+    const location = useLocation();
+    const startGptChatMutation = useStartGptChat();
+    const continuousGptChatMutation = useContinuousGptChat();
+    const { media, userRecording, updateUserRecording, updateChatGptRecording } = useMedia();
+
     /* State */
+    const [chatID, setChatID] = useState<string>("");
+    const [isCanChat, setIsCanChat] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-    const navigation = useNavigate();
-    const { media, updateUserRecording } = useMedia();
+    const { scenario, chatTime } = location.state;
+
     const { handleCountdownStart, handleCountdownStop, ...countdownFlow } = useCountdownBar({
         time: 10,
         isAutoStart: false,
     });
 
+    console.log(isCanChat, chatTime);
+
+    useEffect(() => {
+        if (media.length > 0) {
+            continuousGptChatMutation.mutate(
+                { chat_id: chatID, user_input: last(userRecording) || "" },
+                {
+                    onSuccess: handleGptChatOnSuccess,
+                },
+            );
+        }
+    }, [media]);
+
+    useEffect(() => {
+        startGptChatMutation.mutate(
+            { scenario },
+            {
+                onSuccess: handleGptChatOnSuccess,
+            },
+        );
+    }, []);
+
     /* Event */
+    const handleGptChatOnSuccess = (data: { data: { chat_id: string; tts: string } }) => {
+        setChatID(data.data.chat_id);
+        updateChatGptRecording(data.data.tts);
+        setIsCanChat(true);
+    };
+
     const handleStartRecording = (start: () => void) => {
         start();
         setIsRecording(true);
@@ -39,13 +77,6 @@ const ChatPage = () => {
 
     return (
         <Container paddingY="50px" h="100vh">
-            <Button
-                onClick={() => {
-                    navigation(TalkPageEnum.SUGGESTION);
-                }}
-            >
-                下一頁
-            </Button>
             <ReactMediaRecorder
                 audio
                 onStop={updateUserRecording}
