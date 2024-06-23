@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Select, VStack, Container, Center, Text, Button, Stack } from "@chakra-ui/react";
 import { sample } from "lodash";
@@ -10,17 +10,17 @@ import { ChatType } from "@/utils/common/chat/types";
 const SettingsPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [chatTime, setChatTime] = useState<number>(10);
+    const chatTimeRef = useRef<number>(10);
     const chatType: ChatType = location.state.chatType;
     const scenario = sample(chatScenario[chatType]);
 
     /* Event */
     const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setChatTime(parseInt(event.target.value));
+        chatTimeRef.current = parseInt(event.target.value);
     };
 
     const handleClick = () => {
-        navigate(TalkPageEnum.CHAT, { state: { scenario, chatTime } });
+        navigate(TalkPageEnum.CHAT, { state: { scenario, chatTime: chatTimeRef.current } });
     };
 
     return (
@@ -35,7 +35,7 @@ const SettingsPage = () => {
                             border="1px"
                             flex="1"
                             onChange={handleSelect}
-                            defaultValue={chatTime}
+                            defaultValue={chatTimeRef.current}
                         >
                             <option value={5}>5分鐘</option>
                             <option value={10}>10分鐘</option>

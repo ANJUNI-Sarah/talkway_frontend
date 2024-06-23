@@ -25,7 +25,7 @@ const ChatPage = () => {
     const [chatID, setChatID] = useState<string>("");
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
-    const { scenario, chatTime } = location.state;
+    const { scenario } = location.state;
 
     const { handleCountdownStart, handleCountdownStop, ...countdownFlow } = useCountdownBar({
         time: 10,

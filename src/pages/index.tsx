@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { map } from "lodash";
 import { Stack, Button, Text, Select, VStack, Container, Center } from "@chakra-ui/react";
@@ -31,15 +31,15 @@ const Option = (option: ChatTypeOptionsType) => (
 
 const HomePage = () => {
     const navigate = useNavigate();
-    const [selectedChatType, setSelectedChatType] = useState<ChatType>(ChatType.travel);
+    const selectedRef = useRef<ChatType>(ChatType.travel);
 
     /* Event */
     const handleSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-        setSelectedChatType(event.target.value as ChatType);
+        selectedRef.current = event.target.value as ChatType;
     };
 
     const handleClick = () => {
-        navigate(TalkPageEnum.SETTINGS, { state: { chatType: selectedChatType } });
+        navigate(TalkPageEnum.SETTINGS, { state: { chatType: selectedRef.current } });
     };
 
     return (
@@ -55,7 +55,7 @@ const HomePage = () => {
                         boxShadow="lg"
                         border="1px"
                         onChange={handleSelect}
-                        defaultValue={selectedChatType}
+                        defaultValue={selectedRef.current}
                     >
                         {map(ChatTypeOptions, Option)}
                     </Select>

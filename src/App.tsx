@@ -33,7 +33,6 @@ function App() {
         );
     }
 
-    console.log("isLoading", isLoading());
     return (
         <>
             <Loading isLoading={isLoading()} />
