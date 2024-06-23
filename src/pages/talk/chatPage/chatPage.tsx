@@ -98,7 +98,7 @@ const ChatPage = () => {
                                 </ChatBoxLayout>
                             </Box>
                             <Center>
-                                <Box position="fixed" bottom="30px">
+                                <Box position="fixed" bottom="30px" zIndex={-1}>
                                     <>
                                         <ToggleButton
                                             width="70px"
