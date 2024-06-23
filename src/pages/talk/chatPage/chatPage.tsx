@@ -5,7 +5,7 @@ import { ReactMediaRecorder } from "react-media-recorder";
 import { last } from "lodash";
 
 import { useMedia } from "@/hooks/useMedia";
-import { useCountdownBar } from "@/hooks/_useCountdownBar";
+import { useCountdownBar } from "@/hooks/useCountdownBar";
 import { useStartGptChat, useContinuousGptChat } from "@/queries/useGptChat";
 
 import { ChatBoxLayout } from "@/components/layout";

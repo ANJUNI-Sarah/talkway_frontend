@@ -1,6 +1,6 @@
 import { keyframes, Box } from "@chakra-ui/react";
 import { forwardRef, HTMLAttributes, useEffect, useMemo, Key } from "react";
-import { BarState, BarStateType } from "@/hooks/_useCountdownBar";
+import { BarState, BarStateType } from "@/hooks/useCountdownBar";
 
 type CountDownBarProps = {
     time: number; // 單位：秒
