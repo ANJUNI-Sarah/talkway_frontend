@@ -6,6 +6,7 @@ import { last } from "lodash";
 
 import { useMedia } from "@/hooks/useMedia";
 import { useCountdownBar } from "@/hooks/useCountdownBar";
+import { useChatId } from "@/hooks/useChatId";
 import { useStartGptChat, useContinuousGptChat } from "@/queries/useGptChat";
 
 import { ChatBoxLayout } from "@/components/layout";
@@ -20,12 +21,14 @@ const ChatPage = () => {
     const startGptChatMutation = useStartGptChat();
     const continuousGptChatMutation = useContinuousGptChat();
     const { media, userRecording, updateUserRecording, updateChatGptRecording } = useMedia();
+    const { chatId, setChatId } = useChatId();
 
     /* State */
-    const [chatID, setChatID] = useState<string>("");
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
     const { scenario } = location.state;
+
+    console.log(isButtonDisabled);
 
     const { handleCountdownStart, handleCountdownStop, ...countdownFlow } = useCountdownBar({
         time: 10,
@@ -33,31 +36,19 @@ const ChatPage = () => {
     });
 
     useEffect(() => {
-        if (media.length > 0) {
-            continuousGptChatMutation.mutate(
-                { chat_id: chatID, user_input: last(userRecording) || "" },
-                {
-                    onSuccess: handleOnSuccess,
-                },
-            );
-        }
-    }, [media]);
-
-    useEffect(() => {
         startGptChatMutation.mutate(
             { scenario },
             {
-                onSuccess: handleOnSuccess,
+                onSuccess: (data: { data: { chat_id: string; tts: string } }) => {
+                    setChatId(data.data.chat_id);
+                    updateChatGptRecording(data.data.tts);
+                    setIsButtonDisabled(false);
+                },
             },
         );
     }, []);
 
     /* Event */
-    const handleOnSuccess = (data: { data: { chat_id: string; tts: string } }) => {
-        setChatID(data.data.chat_id);
-        updateChatGptRecording(data.data.tts);
-    };
-
     const handleStartRecording = (start: () => void) => {
         start();
         setIsRecording(true);
@@ -69,6 +60,15 @@ const ChatPage = () => {
         setIsRecording(false);
         handleCountdownStop();
         setIsButtonDisabled(true);
+        continuousGptChatMutation.mutate(
+            { chat_id: chatId, user_input: last(userRecording) || "" },
+            {
+                onSuccess: (data: { data: { tts: string } }) => {
+                    updateChatGptRecording(data.data.tts);
+                    setIsButtonDisabled(false);
+                },
+            },
+        );
     };
 
     return (
@@ -98,7 +98,7 @@ const ChatPage = () => {
                                 </ChatBoxLayout>
                             </Box>
                             <Center>
-                                <Box position="fixed" bottom="30px" zIndex={-1}>
+                                <Box position="fixed" bottom="30px">
                                     <>
                                         <ToggleButton
                                             width="70px"

@@ -16,9 +16,10 @@ export const Loading = ({ isLoading }: LoadingProps) => {
             alignItems="center"
             justifyContent="center"
             display="flex"
-            position="relative"
+            position="absolute"
+            zIndex={999}
         >
-            <Box bg="white" opacity="0.6" width="100vw" height="100vh" position="fixed" />
+            <Box bg="gray.300" opacity="0.7" width="100vw" height="100vh" position="fixed" />
             <Spinner color="brand.500" size="xl" speed="0.7s" />
         </Box>
     );

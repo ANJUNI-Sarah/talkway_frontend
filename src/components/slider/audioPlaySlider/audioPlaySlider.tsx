@@ -14,7 +14,7 @@ type AudioPlaySliderProps = {
 export const AudioPlaySlider = ({ src }: AudioPlaySliderProps) => {
     return (
         <AudioPlayer
-            src={src}
+            src={`data:audio/mp3;base64,${src}`}
             autoPlayAfterSrcChange={false}
             layout="horizontal-reverse"
             showJumpControls={false}
