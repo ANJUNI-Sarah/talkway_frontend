@@ -23,9 +23,8 @@ const ChatPage = () => {
 
     /* State */
     const [chatID, setChatID] = useState<string>("");
-    const [isCanChat, setIsCanChat] = useState<boolean>(false);
-    const [isRecording, setIsRecording] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const [isRecording, setIsRecording] = useState<boolean>(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
     const { scenario, chatTime } = location.state;
 
     const { handleCountdownStart, handleCountdownStop, ...countdownFlow } = useCountdownBar({
@@ -33,14 +32,12 @@ const ChatPage = () => {
         isAutoStart: false,
     });
 
-    console.log(isCanChat, chatTime);
-
     useEffect(() => {
         if (media.length > 0) {
             continuousGptChatMutation.mutate(
                 { chat_id: chatID, user_input: last(userRecording) || "" },
                 {
-                    onSuccess: handleGptChatOnSuccess,
+                    onSuccess: handleOnSuccess,
                 },
             );
         }
@@ -50,16 +47,15 @@ const ChatPage = () => {
         startGptChatMutation.mutate(
             { scenario },
             {
-                onSuccess: handleGptChatOnSuccess,
+                onSuccess: handleOnSuccess,
             },
         );
     }, []);
 
     /* Event */
-    const handleGptChatOnSuccess = (data: { data: { chat_id: string; tts: string } }) => {
+    const handleOnSuccess = (data: { data: { chat_id: string; tts: string } }) => {
         setChatID(data.data.chat_id);
         updateChatGptRecording(data.data.tts);
-        setIsCanChat(true);
     };
 
     const handleStartRecording = (start: () => void) => {

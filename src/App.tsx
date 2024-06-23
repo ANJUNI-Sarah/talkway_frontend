@@ -1,13 +1,29 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
-import { Spinner } from "@chakra-ui/react";
-
 import { useErrorBoundary } from "react-use-error-boundary";
 
 import router from "@/router/routes";
+import { Loading } from "@/components/loading";
+import { useLoadingDecorator, loadingState } from "@/hooks/useLoadingDecorator";
+
+//  Suspense fallback 時觸發 loading, 並在 unmount 時結束 loading
+const LoadingFallback = () => {
+    const { startLoading, endLoading } = useLoadingDecorator();
+
+    useEffect(() => {
+        startLoading();
+
+        return () => {
+            endLoading();
+        };
+    }, []);
+
+    return null;
+};
 
 function App() {
     const [error] = useErrorBoundary((error, errorInfo) => console.error(error, errorInfo));
+    const { isLoading } = loadingState();
 
     if (error) {
         return (
@@ -17,10 +33,14 @@ function App() {
         );
     }
 
+    console.log("isLoading", isLoading());
     return (
-        <Suspense fallback={<Spinner color="brand.500" />}>
-            <RouterProvider router={router} />
-        </Suspense>
+        <>
+            <Loading isLoading={isLoading()} />
+            <Suspense fallback={<LoadingFallback />}>
+                <RouterProvider router={router} />
+            </Suspense>
+        </>
     );
 }
 
