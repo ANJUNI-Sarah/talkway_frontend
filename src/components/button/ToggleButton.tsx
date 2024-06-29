@@ -33,7 +33,6 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
             () => (isControl ? isOnControlActive : innerIsActive),
             [isControl, isOnControlActive, innerIsActive],
         );
-        console.log("isPlay", isPlay);
 
         /* Event */
         const stop = () => (isControl ? onStop() : setInnerIsActive(false));

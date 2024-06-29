@@ -1,5 +1,3 @@
-
-
 const API_BASE_URL = import.meta.env.VITE_OFFICIAL_API_URL
 
 const API = {
