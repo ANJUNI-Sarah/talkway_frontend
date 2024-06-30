@@ -23,7 +23,7 @@ const SuggestionPage = () => {
                     <Box>
                         {userRecording.map((src, index) => (
                             <BubbleBox key={index}>
-                                <AudioPlaySlider src={src} />
+                                <AudioPlaySlider src={src.base64} />
                             </BubbleBox>
                         ))}
                     </Box>
